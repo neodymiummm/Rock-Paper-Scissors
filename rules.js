@@ -13,15 +13,13 @@ function getComputerChoice() {
 }
 
 function getPlayerChoice() {
-    let input = prompt("What is your throw? (Rock, Paper, Scissors)").toLowerCase();
+    let input = prompt("What is your throw? (Rock, Paper, Scissors)");
     if (throws.findIndex(x => x === input) === -1) {
-        return -1
+        return -1;
     }
 
-    return input;
+    return input.toLowerCase();
 }
-
-console.log(getPlayerChoice())
 
 function doRound(playerChoice, computerChoice) {
     let playerIdx = throws.findIndex(x => x === playerChoice);
@@ -31,4 +29,38 @@ function doRound(playerChoice, computerChoice) {
     return outcome;
 }
 
+function doGame(rounds) {
+    for (let i = 0; i < rounds; i++) {
+        console.log(`Beginning Round ${i + 1}`);
+        
+        let playerChoice = getPlayerChoice();
+        if (playerChoice === -1) {
+            console.log("Whoops! Something went wrong with your input, let's try again.");
+            console.log("")
+            continue;
+        }
 
+        let computerChoice = getComputerChoice();
+        let result = doRound(playerChoice, computerChoice);
+
+        console.log(`You played: ${playerChoice}`);
+        console.log(`The Computer played ${computerChoice}`);
+        switch (result) {
+            case 1:
+                console.log(`You won! ${playerChoice} beats ${computerChoice}`)
+                break;
+            case 0:
+                console.log(`You tied, ${playerChoice} ties ${computerChoice}`)
+                break;
+            case -1:
+                console.log(`You lost :( ${computerChoice} beats ${playerChoice}`)
+                break;
+            default:
+                console.log("Whoops! Something went wrong with your input, let's try again.");
+                console.log("")
+        }
+        console.log("")
+    }
+} 
+
+doGame(3);
